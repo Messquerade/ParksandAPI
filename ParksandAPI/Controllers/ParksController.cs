@@ -19,9 +19,54 @@ namespace ParksandAPI.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Park>>> Get()
+    public async Task<ActionResult<IEnumerable<Park>>> Get(string name, string statePark, string nationalPark, string activities, int acreage, string location)
     {
-      return await _db.Parks.ToListAsync();
+      var query = _db.Parks.AsQueryable();
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+
+      if (statePark != null)
+      {
+        if (statePark == "true" || statePark == "yes")
+        {
+          query = query.Where(entry => entry.StatePark == true);
+        }
+        else if (statePark == "false" || statePark == "no")
+        {
+          query = query.Where(entry => entry.StatePark == false);
+        }
+      }
+
+      if (nationalPark != null)
+      {
+        if (nationalPark == "true" || nationalPark == "yes")
+        {
+          query = query.Where(entry => entry.NationalPark == true);
+        }
+        else if (nationalPark == "false" || nationalPark == "no")
+        {
+          query = query.Where(entry => entry.NationalPark == false);
+        }
+      }
+
+      if (activities != null)
+      {
+        query = query.Where(entry => entry.Activities.Contains(activities));
+      }
+
+      if (acreage != 0)
+      {
+        query = query.Where(entry => entry.Acreage == acreage);
+      }
+      
+      if (location != null)
+      {
+        query = query.Where(entry => entry.Address.Contains(location));
+      }
+      return await query.ToListAsync();
     }
 
     [HttpPost]
