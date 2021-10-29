@@ -51,7 +51,7 @@ After completing all setup instructions, use Swagger in your browser to easily v
 
 Base URL: http://localhost:5000
 
-#### HTTP Request
+### HTTP Request
 
 GET /api/parks
 POST /api/parks
@@ -59,5 +59,47 @@ GET /api/parks/{id}
 PUT /api/parks/{id}
 DELETE /api/parks/{id}
 
-#### Path Parameters
+### Path Parameters
 
+| Parameter | Type | Default | Required | Description |
+| :---: | :---: | :---: | :---: | --- |
+| name | string | none | true | Returns exact match of name the of the park.
+|statePark | string | none| true | Returns parks that are either state parks or not, accepts "true", "yes", "false", or "no".
+| nationalPark | string | none | true | Returns parks that are either state parks or not, accepts "true", "yes", "false", or "no".
+| activities | string | none | false | Returns parks that contain that activity in activities.
+| acreage | int | 0 | false | Returns parks with that exact number of acres.
+| location | string | none | false | Returns parks that contain the entered string in their address (ex. city name, zip code, or state code) |
+
+### Example Query
+`
+http://localhost:5000/api/Parks/?location=Seattle&activities=hiking
+`
+
+### Example JSON Response
+```
+[
+  {
+    "parkId": 2,
+    "name": "Discovery Park",
+    "statePark": false,
+    "nationalPark": false,
+    "activities": "hiking, beach access, historic lighthouse",
+    "acreage": 534,
+    "address": "3801 Discovery Park Blvd, Seattle, WA 98199"
+  }
+]
+```
+
+## Known Bugs
+
+* _NA_
+
+## License
+
+_[MIT](https://opensource.org/licenses/MIT)_  
+
+Copyright (c) 2021 Anna Clarke
+
+## Contact Information
+
+Anna Clarke: <anclarkie@gmail.com>
